@@ -15,13 +15,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ApiController", 
+@WebServlet(
+        name = "ApiController", 
         urlPatterns = {"/api"})
 public class ApiController extends HttpServlet {
 
     private final Gson gson = new Gson();
-    List<Productos> lista = new ArrayList<>();
 
+    // Métodos de nuestro endpoint "/api"
+    
     @Override
     protected void doGet(
             HttpServletRequest req,
@@ -94,7 +96,7 @@ public class ApiController extends HttpServlet {
         enviar(resp, listaJson);
     }
     
-    // METODOS
+    // Métodos de la clase ApiController
     
     private static String inputStreamToString(InputStream inputStream){
         Scanner scanner = new Scanner(inputStream, "UTF-8");
