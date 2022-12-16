@@ -29,7 +29,6 @@ public class ApiController extends HttpServlet {
             throws ServletException, IOException {
        
         String listaJson = gson.toJson(Productos.getListado());
-  
         enviar(resp, listaJson);
     }
 
