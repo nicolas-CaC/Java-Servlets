@@ -91,7 +91,6 @@ public class ApiController extends HttpServlet {
     
     private void enviar(HttpServletResponse resp, String objeto) 
             throws IOException{
-        
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
