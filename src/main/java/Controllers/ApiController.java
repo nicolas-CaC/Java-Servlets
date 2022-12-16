@@ -39,8 +39,7 @@ public class ApiController extends HttpServlet {
             throws ServletException, IOException {
         
         String body = inputStreamToString(req.getInputStream());
-        Productos producto = gson.fromJson(body, Productos.class);
-        
+        Productos producto = gson.fromJson(body, Productos.class); 
         boolean exito = producto.addProduct();
         
         String error = obtenerError(exito);
