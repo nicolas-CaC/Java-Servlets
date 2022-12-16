@@ -6,8 +6,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,10 +41,8 @@ public class ApiController extends HttpServlet {
         
         String body = inputStreamToString(req.getInputStream());
         Productos producto = gson.fromJson(body, Productos.class);
-
-        boolean exito;
-                
-        exito = producto.addProduct();
+        
+        boolean exito = producto.addProduct();
         
         String error = obtenerError(exito);
         enviar(resp, error);
@@ -58,11 +54,9 @@ public class ApiController extends HttpServlet {
             HttpServletResponse resp) 
             throws ServletException, IOException {
         
-        boolean encontrado;
-        
         String body = inputStreamToString(req.getInputStream());
         Productos producto = new Gson().fromJson(body, Productos.class);
-        encontrado = producto.updateProduct();
+        boolean encontrado = producto.updateProduct();
         
         String error = obtenerError(encontrado);        
         enviar(resp, error);
@@ -74,10 +68,8 @@ public class ApiController extends HttpServlet {
             HttpServletResponse resp) 
             throws ServletException, IOException {
         
-        boolean encontrado;
-        
         String nombre = req.getParameter("nombre");
-        encontrado = Productos.deleteProduct(nombre);
+        boolean encontrado = Productos.deleteProduct(nombre);
 
         String error = obtenerError(encontrado);        
         enviar(resp, error);
