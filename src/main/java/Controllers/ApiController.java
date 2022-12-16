@@ -43,14 +43,13 @@ public class ApiController extends HttpServlet {
         
         String body = inputStreamToString(req.getInputStream());
         Productos producto = gson.fromJson(body, Productos.class);
+
+        boolean exito;
+                
+        exito = producto.addProduct();
         
-        producto.addProduct();
-        
-        Errores error = new Errores(0);
-        
-        String listaJson = gson.toJson(error);
-        
-        enviar(resp, listaJson);
+        String error = obtenerError(exito);
+        enviar(resp, error);
     }
 
     @Override
@@ -59,20 +58,14 @@ public class ApiController extends HttpServlet {
             HttpServletResponse resp) 
             throws ServletException, IOException {
         
-        Errores error;
         boolean encontrado;
         
         String body = inputStreamToString(req.getInputStream());
         Productos producto = new Gson().fromJson(body, Productos.class);
         encontrado = producto.updateProduct();
         
-        error = encontrado 
-                ? new Errores(0) 
-                : new Errores(1);
-        
-        String listaJson = new Gson().toJson(error);
-        
-        enviar(resp, listaJson);
+        String error = obtenerError(encontrado);        
+        enviar(resp, error);
     }
 
     @Override
@@ -81,19 +74,13 @@ public class ApiController extends HttpServlet {
             HttpServletResponse resp) 
             throws ServletException, IOException {
         
-        Errores error;
         boolean encontrado;
         
         String nombre = req.getParameter("nombre");
         encontrado = Productos.deleteProduct(nombre);
-        
-        error = encontrado 
-                ? new Errores(0) 
-                : new Errores(1);
-        
-        String listaJson = gson.toJson(error);
-        
-        enviar(resp, listaJson);
+
+        String error = obtenerError(encontrado);        
+        enviar(resp, error);
     }
     
     // Métodos de la clase ApiController
@@ -103,6 +90,13 @@ public class ApiController extends HttpServlet {
         return scanner.hasNext()
                 ? scanner.useDelimiter("\\A").next()
                 : "";
+    }
+    
+    private String obtenerError(boolean encontrado){
+                Errores error = encontrado 
+                ? new Errores(0) 
+                : new Errores(1);        
+        return gson.toJson(error);
     }
     
     private void enviar(HttpServletResponse resp, String objeto) 

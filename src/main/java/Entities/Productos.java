@@ -34,12 +34,14 @@ public class Productos {
         return precio;
     }
     
-    public void addProduct(){
+    public boolean addProduct(){
         Productos nuevo = new Productos(this.nombre, this.marca, this.precio);
         Productos.listado.add(nuevo);
+        return true;
     }
     
     public boolean updateProduct(){
+        
         boolean encontrado = false;
         
         for(Productos producto: Productos.listado){
@@ -49,12 +51,12 @@ public class Productos {
                 encontrado = true;
                 return encontrado;
             }
-        }
-        
+        }     
         return encontrado;
     }
     
     public static boolean deleteProduct(String nombre){
+        
         boolean encontrado = false;
         
         for(Productos producto: Productos.listado){
@@ -63,9 +65,7 @@ public class Productos {
                 encontrado = true;
                 return encontrado;
             }
-        }
-        
+        }        
         return encontrado;
     }
-    
 }
